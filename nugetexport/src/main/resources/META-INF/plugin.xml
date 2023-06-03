@@ -1,0 +1,70 @@
+<!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
+<idea-plugin>
+    <!-- Unique identifier of the plugin. It should be FQN. It cannot be changed between the plugin versions. -->
+    <id>de.firstcoder.nugetexport</id>
+
+    <!-- Public plugin name should be written in Title Case.
+         Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-name -->
+    <name>NugetExport</name>
+
+    <!-- A displayed Vendor name or Organization ID displayed on the Plugins Page. -->
+    <vendor email="info@first-coder.de" url="https://www.first-coder.de">First-Coder</vendor>
+
+    <!-- Description of the plugin displayed on the Plugin Page and IDE Plugin Manager.
+         Simple HTML elements (text formatting, paragraphs, and lists) can be added inside of <![CDATA[ ]]> tag.
+         Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-description -->
+    <description><![CDATA[
+    This plugin can export the dependencies of nuget packages to a folder.
+    This can be useful if, for example, a separate nuget repository is used.
+  ]]></description>
+
+    <!-- Product and plugin compatibility requirements.
+         Read more: https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html -->
+    <depends>com.intellij.modules.platform</depends>
+
+
+    <actions>
+
+
+        <action id="NugetExport" class="de.firstcoder.nugetexport.ExportAction"
+                text="NugetExport"
+                icon="export.png"
+        >
+            <keyboard-shortcut first-keystroke="control alt N" keymap="$default" />
+            <add-to-group group-id="ToolbarRunGroup" anchor="last"/>
+            <add-to-group group-id="ToolsMenu" anchor="last"/>
+            <add-to-group group-id="TouchBar" anchor="last"/>
+        </action>
+
+        <action id="de.firstcoder.nugetexport.ExportAction"
+                class="de.firstcoder.nugetexport.ExportAction" text="ExportAction"/>
+        <action id="de.firstcoder.nugetexport.Models.ExportAction" class="de.firstcoder.nugetexport.ExportAction"
+                text="ExportAction"/>
+    </actions>
+
+
+    <extensions defaultExtensionNs="com.intellij">
+        <applicationService
+                serviceImplementation="de.firstcoder.nugetexport.Settings.AppSettingsState"/>
+    </extensions>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <applicationConfigurable
+                parentId="tools"
+                instance="de.firstcoder.nugetexport.Settings.AppSettingsConfigurable"
+                id="de.firstcoder.nugetexport.Settings.AppSettingsConfigurable"
+                displayName="NugetExport"/>
+    </extensions>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <notificationGroup id="NugetExport Notification"
+                           displayType="BALLOON"
+                           />
+    </extensions>
+
+    <!-- Extension points defined by the plugin.
+         Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
+    <!--<extensions defaultExtensionNs="com.intellij">
+
+    </extensions>-->
+</idea-plugin>
